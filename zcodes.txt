@@ -1,0 +1,9 @@
+>py manage.py runserver-         to run the program
+
+>py -m venv myworld    -         create virtual environment
+D:>myworld\Scripts\activate.bat-   activate environment
+>py -m pip install Django    - 	 install django
+django-admin startproject brats -create projects
+
+>py manage.py makemigrations
+>py manage.py migrate

@@ -1,0 +1,149 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="{% static 'home-logo.png' %}" type="image/x-icon">
+
+    <meta charset="UTF-8">
+    <title>Sign Up</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background:linear-gradient(to right, #ff5f6d, #9771ff);
+            
+        }
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        .container {
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 20px;
+            width: 300px;
+            background:#fff;
+        }
+        .tab {
+            overflow: hidden;
+            border: 1px solid #ccc;
+            background-color: #f1f1f1;
+        }
+        .tab button {
+            background-color: inherit;
+            float: left;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            padding: 14px 16px;
+            transition: 0.3s;
+        }
+        .tab button:hover {
+            background-color: #ddd;
+        }
+        .tab button.active {
+            background-color: #ccc;
+        }
+        #SignUp button, #Login button {
+            background: linear-gradient(to right, #ff5f6d, #9771ff);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 10px;
+            font-size: 16px;
+            float: center;
+            display: block; /* Make the button a block element */
+            margin-left: auto; /* Auto margin on the left */
+            margin-right: auto; /* Auto margin on the right */
+        }
+        form h2 {
+            margin-bottom: 20px;
+        }
+
+        form input {
+            width: 100%;
+            padding: 10px;
+            margin-right: 10px 10px 10px 0;
+            /* margin-left: 10px; */
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="tab">
+            <button class="tablinks" onclick="openTab(event, 'SignUp')">Sign Up</button>
+            <button class="tablinks" onclick="openTab(event, 'Login')">Login</button>
+        </div>
+
+        <div id="SignUp" class="tab-content active">
+            <h2>Sign Up</h2>
+            <form method="post" action="{% url 'signup' %}">
+                {% csrf_token %}
+                {{ signup_form.as_p }}
+                <button type="submit">Sign Up</button>
+                {% if signup_form.errors %}
+                    <div class="errors">
+                        {% for field in signup_form %}
+                            {% for error in field.errors %}
+                                <p>{{ error }}</p>
+                            {% endfor %}
+                        {% endfor %}
+                        {% for error in signup_form.non_field_errors %}
+                            <p>{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </form>
+        </div>
+        
+        <div id="Login" class="tab-content">
+            <h2>Login</h2>
+            <form method="post" action="{% url 'login' %}">
+                {% csrf_token %}
+                {{ login_form.as_p }}
+                <button type="submit">Login</button>
+                {% if login_form.errors %}
+                    <div class="errors">
+                        {% for field in login_form %}
+                            {% for error in field.errors %}
+                                <p>{{ error }}</p>
+                            {% endfor %}
+                        {% endfor %}
+                        {% for error in login_form.non_field_errors %}
+                            <p>{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </form>
+        </div>
+    </div>
+    
+
+    <script>
+        function openTab(evt, tabName) {
+            var i, tabcontent, tablinks;
+            tabcontent = document.getElementsByClassName("tab-content");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+            }
+            tablinks = document.getElementsByClassName("tablinks");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(" active", "");
+            }
+            document.getElementById(tabName).style.display = "block";
+            evt.currentTarget.className += " active";
+
+        }
+    </script>
+</body>
+</html>

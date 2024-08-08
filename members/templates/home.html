@@ -1,0 +1,395 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- favicon -->
+    <link rel="icon" href="{% static 'home-logo.png' %}" type="image/x-icon">
+    <title>Brain Tumor Segmentation</title>
+    <style>
+        body {
+            margin: 0 auto;
+            font-family: Arial, sans-serif;
+            color: #333;
+            max-width: 1100px;
+            font-family: Arial, sans-serif;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            background-color: #fff;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo img {
+            height: 30px;
+            margin-right: 10px;
+        }
+        header .logo span {
+            font-weight: bold;
+            font-size: 18px;
+        }
+        nav ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            gap: 20px;
+            font-weight: bold;
+        }
+
+        nav ul li {
+            margin: 0;
+        }
+        nav ul li button{
+            margin-left: 10px;
+            border: 2px solid #ff5f6d;
+            padding: 8px 12px;
+            border-radius: 3em;
+            background-color: transparent;
+            color: #000;
+            cursor: pointer;
+        }
+        nav ul li a {
+            text-decoration: none;
+            color: #333;
+            font-weight: bold;
+        }
+        .nav-toggle {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+        }
+        nav ul.show {
+            display: block;
+        }
+        .hero {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            padding: 50px 20px;
+            margin-top: 20px;
+        }
+
+        .hero h1 {
+            font-size: 2.5em;
+            margin: 0;
+            display: block;
+            margin-top: 20px;
+        }
+
+        .hero p {
+            font-size: 18px;
+            margin: 40px 0;
+            display: block;
+            margin-top: 60px;
+        }
+
+        .hero button {
+            padding: 10px 20px;
+            /* linear gradient like messenger logo  */
+            background: linear-gradient(to right, #ff5f6d, #9771ff);
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 30px;
+            font-size: 16px;
+        }
+
+        .hero button:hover {
+            background-color: #0056b3;
+        }
+
+        .illustration {
+            margin-top: 30px;
+            float: left;
+        }
+
+        .illustration img {
+            width: 100%;
+            max-width: 582px;
+        }
+        h2 {
+            text-align: center;
+            margin-top: 50px;
+        }
+        .form {
+            background-color: #f8f8f8;
+            border-radius: 8px;
+            padding: 20px;
+            max-width: 500px;
+            margin: auto;
+        }
+
+        .form h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        .form form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form form input[type="file"] {
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+            width: 100%;
+        }
+
+        .form form button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            background: linear-gradient(to right, #ff5f6d, #9771ff);
+            color: white;
+            cursor: pointer;
+            margin-top: 10px;
+            font-size: 16px;
+        }
+
+        .form form button:hover {
+            background-color: #0056b3;
+        }
+        input[type="text" i] {
+            padding: 10px;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+            width: 100%;
+        }
+        .upload {
+            margin-top: 50px;
+            display: flex;
+            justify-content: space-between;
+            flex-direction: row;
+            align-items: center;
+        }
+        .list ul {
+            list-style-type:square;
+            padding: 0;
+            margin: 0;
+            max-width: 400px;
+            font-size: 18px;
+
+        }
+
+        .list li {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+        .list{
+            margin-left: 20px;
+
+        }
+
+        .list li:last-child {
+            border-bottom: none;
+        }
+        .profile {
+            position: fixed; /* Position it relative to the viewport */
+            top: 10px; /* Distance from the top of the viewport */
+            right: 10px; /* Distance from the right side of the viewport */
+            width: 200px; /* Width of the box */
+            padding: 10px; /* Padding inside the box */
+            background-color: #f9f9f9; /* Background color of the box */
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2); /* Add some shadow for better visibility */
+            border-radius: 5px; /* Optional: Rounded corners */
+            display: none; /* Hide by default */
+            z-index: 1000; /* Ensure it's above other content */
+        }
+
+
+        .profile.show {
+            display: block; /* Show when toggled */
+        }
+
+        /* Optional: Hide class if you're using the 'DOMContentLoaded' part */
+        .hide {
+            display: none;
+        }
+/* Responsive Design */
+@media (min-width: 768px) {
+    
+    .hero {
+        flex-direction: row;
+        justify-content: space-between;
+        text-align: left;
+    }
+
+    .illustration {
+        margin-top: 0;
+    }
+
+    .hero h1 {
+        font-size: 3em;
+    }
+
+    
+}
+@media screen and (max-width: 768px){
+    .upload {
+        display: flex;
+        flex-direction: column-reverse;
+        align-items: center;
+    }
+    .profile {
+        top: 40px;
+        right: 10px;
+    }
+    
+}
+@media (max-width: 450px) {
+    .nav-toggle {
+        display: block;
+        color:black;
+    }
+    nav ul {
+        display: none;
+        flex-direction: column;
+        width: 100%;
+        background-color: #fff;
+        position: absolute;
+        top: 50px;
+        left: 0;
+        padding: 0;
+    }
+    nav ul li {
+        margin: 0;
+        width: 100%;
+        text-align: center;
+        border-bottom: 1px solid #ddd;
+    }
+    nav ul li a {
+        display: block;
+        padding: 10px 0;
+    }
+    .profile {
+        top: 40px;
+        right: 10px;
+    }
+}
+
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            {% load static %}
+            <img src="{% static 'home-logo.png' %}" alt="Brain Logo">
+            <span>Brain Tumor Segmentation</span>
+        </div>
+        <nav>
+            <button class="nav-toggle" id="navToggle">&#9776;</button>
+            <ul>
+                <li><a href="#hero"><button>Home</button></a></li>
+                <li><a href="#upload"><button>Upload</button></a></li>
+                <li><a href="#"><button>Samples</button></a></li>
+                <li><a href="#"><button>About</button></a></li>
+                <li><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="red" class="bi bi-person-circle" viewBox="0 0 16 16">
+                                <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
+                                <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
+                            </svg>
+                    </li>
+
+                
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section class="hero">
+            <div>
+                <h1>Welcome at Brain Tumor Segmentation</h1>
+            <p>AI-powered Precision Medical care<br>
+               Easily upload MRI scans and segment tumors<br>
+               Receive accurate results in seconds.
+            </p>
+            <button>Explore</button>
+            </div>
+            <div class="illustration">
+                {% load static %}
+                <img src="{% static 'home-illustrator.png' %}" alt="Brain Illustration">
+            </div>
+        </section>
+    </main>
+    <section id="upload">
+        <div class="upload">
+            <div class="list">
+                <ul>
+                    <li>To view the results, attach your MRI file.</li>
+                    <li>The file should be in nifti format</li>
+                    <li>Be patient and see the result below</li>
+                    
+                   
+                    
+                </ul>
+            </div>
+            <div class="form" >
+                <h1>Upload MRI Scan</h1>
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <button type="submit">See results</button>
+                </form>
+            </div>
+            
+        </div>
+    <footer>
+        <p>&copy; 2021 Brain Tumor Segmentation</p>
+    </footer>
+    <div class="profile">
+        {% if user.is_authenticated %}
+            <p>Welcome, {{ user.username }}!</p>
+            <a href="{% url 'logout' %}">Logout</a>
+        {% else %}
+            <a href="{% url 'login' %}">Login</a> | 
+            <a href="{% url 'signup' %}">Sign Up</a>
+        {% endif %}
+    </div>
+    
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const navToggle = document.getElementById('navToggle');
+            const nav = document.querySelector('nav ul');
+            const profileToggle = document.querySelector('.bi-person-circle'); // Select the toggle element
+            const profileDiv = document.querySelector('.profile'); // Select the profile div
+    
+            // Toggle navigation menu visibility
+            navToggle.addEventListener('click', () => {
+                nav.classList.toggle('show');
+            });
+    
+            // Toggle the profile div visibility and prevent event propagation
+            profileToggle.addEventListener('click', function(event) {
+                profileDiv.classList.toggle('show');
+                event.stopPropagation(); // Prevent click from immediately propagating to document
+            });
+    
+            // Hide the profile div when clicking outside of it
+            document.addEventListener('click', function(event) {
+                if (!profileDiv.contains(event.target) && !profileToggle.contains(event.target)) {
+                    profileDiv.classList.remove('show');
+                }
+            });
+    
+            // Initially hide the profile div
+            profileDiv.classList.add('hide'); // Ensure the profile div is hidden on page load
+        });
+    </script>
+</body>
+</html>
