@@ -1,19 +1,19 @@
 
 from django import forms
-from .models import MRIUpload
+# from .models import MRIUpload
 from django.contrib.auth.forms import UserCreationForm
+from django.core.exceptions import ValidationError
 from django.contrib.auth.models import User
 
-class MRIUploadForm(forms.ModelForm):
-    class Meta:
-        model = MRIUpload
-        fields = ['name','nifti_file']
+class MRIUploadForm(forms.Form):
+    name = forms.CharField(max_length=100)
+    nifti_file = forms.FileField()  # Ensure this matches the name used in the view
 
     def clean_nifti_file(self):
         file = self.cleaned_data.get('nifti_file')
         valid_extensions = ['.nii', '.nii.gz']
         if not any(file.name.endswith(ext) for ext in valid_extensions):
-            raise forms.ValidationError('File must be a NIfTI file with .nii or .nii.gz extension')
+            raise ValidationError('File must be a NIfTI file with .nii or .nii.gz extension')
         return file
     
 class SignUpForm(UserCreationForm):

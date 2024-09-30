@@ -1,0 +1,86 @@
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="{% static 'home-logo.png' %}" type="image/x-icon">
+    <title>My Segmentation Results</title>
+    <style>
+        
+        .container {
+            max-width: 1200px;
+            margin: auto;
+        }
+        nav{
+            width: 100px;
+            display: block;
+            text-align: center;
+            margin: 20px;
+        }
+        nav a {
+            
+            padding: 5px 15px;
+            text-decoration: none;
+            color: black;
+            font-size: 18px;
+            border-radius: 10px;
+            border: 3px solid red;
+            
+        }
+        h1 {
+            text-align: center;
+            margin: 30px;
+        }
+        .image-gallery {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            text-align: center;
+            font-size: 18px;
+        }
+        
+        .image-gallery img {
+            max-width: 300px;
+            height: auto;
+            flex: 1 1 300px;
+        }
+        .image-gallery .image-item {
+            border: 1px solid red;
+            border-radius: 9px;
+            padding: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .image-gallery button {
+            background: linear-gradient(to right, #ff5f6d, #9771ff);
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+            width: 80%;
+            margin: 2px auto;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    
+    <div class="container">
+        <nav>
+            <a href="{% url 'home' %}">Home</a>
+        </nav>
+        <h1>My Segmentation Results</h1>
+        <div class="image-gallery">
+            {% for image in images %}
+                <div class="image-item">
+                    <img src="{{ image.url }}" alt="Segmentation Result">
+                    <p>{{ image.name }}</p>
+                    <a href="{{ image.url }}" download="{{ image.name }}.gif"><button>Download</button></a>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html>

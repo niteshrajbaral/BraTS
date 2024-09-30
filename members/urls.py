@@ -11,4 +11,5 @@ urlpatterns = [
     path('logout/', logout_view, name='logout'),
     path('success/', success_view, name='success'),
     path('success_page/', views.success_page, name='success_page'),
+    path('my_results/', views.my_results_view, name='my_results'),
 ]

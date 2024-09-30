@@ -7,9 +7,63 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="{% static 'home-logo.png' %}" type="image/x-icon">
     <title>Segmentation Result</title>
+    <style>
+        .container{
+            max-width: 1200px;
+            margin: auto;
+        }
+        nav{
+            width: 100px;
+            display: block;
+            text-align: center;
+            margin: 20px;
+        }
+        nav a {
+            
+            padding: 5px 15px;
+            text-decoration: none;
+            color: black;
+            font-size: 18px;
+            border-radius: 10px;
+            border: 3px solid red;
+            
+        }
+        h1{
+            text-align: center;
+        }
+        img{
+            width: 100%;
+            height: auto;
+        }
+        .flex-box{
+            display: flex;
+            justify-content: center;
+        }
+        button {
+            background: linear-gradient(to right, #ff5f6d, #9771ff);
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+            width: 100px;
+            margin: 2px auto;
+            text-decoration: none;
+        }
+    </style>
 </head>
 <body>
-    <h1>Segmentation Result</h1>
-    <img src="{{ result_img_path }}" alt="Segmentation Result">
+    <div class="container">
+        <nav>
+            <a href="{% url 'home' %}">Home</a>
+        </nav>
+        <h1>Segmentation Result</h1>
+        <img src="{{ result_img_path }}" alt="Segmentation Result">
+        <div class="flex-box">
+           <a href="{{ result_img_path }}" download="{{ name }}.gif"><button>Download</button></a>
+        </div>
+    </div>
+
 </body>
 </html>

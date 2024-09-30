@@ -283,7 +283,23 @@
         right: 10px;
     }
 }
+#samples {
+    text-align: center;
+    margin-top: 50px;
 
+}
+#samples h2 {
+    margin-bottom: 20px;
+}
+#samples img {
+    width:100%;
+}
+footer {
+    text-align: center;
+    padding: 20px;
+    background-color: #f8f8f8;
+    border-top: 1px solid #ddd;
+}
     </style>
 </head>
 <body>
@@ -298,8 +314,8 @@
             <ul>
                 <li><a href="#hero"><button>Home</button></a></li>
                 <li><a href="#upload"><button>Upload</button></a></li>
-                <li><a href="#"><button>Samples</button></a></li>
-                <li><a href="#"><button>About</button></a></li>
+                <li><a href="#samples"><button>Samples</button></a></li>
+                <li><a href="#"><button>Blogs</button></a></li>
                 <li><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="red" class="bi bi-person-circle" viewBox="0 0 16 16">
                                 <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
                                 <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
@@ -318,7 +334,7 @@
                Easily upload MRI scans and segment tumors<br>
                Receive accurate results in seconds.
             </p>
-            <button>Explore</button>
+            <a href="#upload"><button>Explore</button></a>
             </div>
             <div class="illustration">
                 {% load static %}
@@ -343,17 +359,36 @@
                 <form method="post" enctype="multipart/form-data">
                     {% csrf_token %}
                     {{ form.as_p }}
-                    <button type="submit">See results</button>
+                    
+                    <button id="see-results-button" type="submit">See results</button>
                 </form>
+
+                
             </div>
             
         </div>
+    </section>
+    <section id="samples">
+        <h2>Sample Results</h2>
+        {% load static %}
+        <img src="{% static 'brain_animation.gif' %}" alt="segmented-gif">
+    </section>
+    <section id="blogs">
+        <div class="container">
+            <div class="cards">
+                <img src="" alt="Blog1-img">
+            </div>
+        </div>
+    </section>
     <footer>
-        <p>&copy; 2021 Brain Tumor Segmentation</p>
+        <p>&copy; Brain Tumor Segmentation, GCES</p>
     </footer>
     <div class="profile">
         {% if user.is_authenticated %}
             <p>Welcome, {{ user.username }}!</p>
+            <br>
+            <a href="{% url 'my_results' %}">My Results</a>
+            <br>
             <a href="{% url 'logout' %}">Logout</a>
         {% else %}
             <a href="{% url 'login' %}">Login</a> | 
@@ -389,7 +424,21 @@
     
             // Initially hide the profile div
             profileDiv.classList.add('hide'); // Ensure the profile div is hidden on page load
+
+            const seeResultsButton = document.querySelector('#see-results-button');
+
+            seeResultsButton.addEventListener('click', function(event) {
+                const isAuthenticated = "{{ user.is_authenticated|yesno:'true,false' }}" === 'true';
+                if (!isAuthenticated) {
+                    event.preventDefault();
+                    window.location.href = '/login/';
+                } else {
+                    document.querySelector('#upload-form').submit();
+                }
+            });
+
         });
     </script>
+
 </body>
 </html>

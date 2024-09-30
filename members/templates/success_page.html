@@ -7,6 +7,38 @@
     <link rel="icon" href="{% static 'home-logo.png' %}" type="image/x-icon">
 
     <title>Success</title>
+    <style>
+       body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background: linear-gradient(to right, #ff5f6d, #9771ff); /* Use background instead of background-color */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh; /* Ensure the body takes the full height of the viewport */
+    }
+    .container {
+        margin: auto;
+        width: 400px;
+        height: 400px;
+        text-align: center;
+        border-radius: 10px; 
+        background-color: #f0f0f0;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+    }
+    h1 {
+        margin-top: 50px;
+    }
+
+    </style>
+    
+</head>
+<body onload="showPopup()">
+    <div class="container">
+        <h1>Success !!!</h1>
+        <h2> You are currently logged in </h2>
+    </div>
     <script>
         function showPopup() {
             alert("Click OK to redirect to the home page.");
@@ -15,9 +47,5 @@
             }, 3000); // Redirect after 3 seconds
         }
     </script>
-</head>
-<body onload="showPopup()">
-    <h1>Success !!!</h1>
-    <h2> You are currently logged in </h2>
 </body>
 </html>
